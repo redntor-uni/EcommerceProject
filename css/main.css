@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+.jumbotron {  /*Bootstrap class*/
+    background-color: #333; 
+    padding: 15px; 
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+.nav-list {
+    /* Add styles here */
+    display: flex;                    /*Makes the items into a flex*/
+    justify-content:space-around;         /*Space items evenly*/
+    list-style-type: none;            /*Removes bullet point from view*/
+}
+
+.nav-list li a {
+    font-size: 18px; 
+    transition: background-color 0.3s ease; 
+    /* Add additional styles here */
+    color: white;                   /*Makes links text white*/
+    text-decoration: none;            /*Removes the underline on the link*/
+    margin-left: -40px;               /*To remove bullet point invisible spacing*/
+    /* padding-left: 70px; */
+    padding: 20px;
+}
+
+.nav-list li a:hover {
+    background-color: #555; 
+    border-radius: 4px; 
+}
+
+span {
+    vertical-align: middle;
+}
+/*-----------------------------------------------------------------------------------------------*/
+.row {
+    justify-content: center;                /*align grid horizontally to div*/
+    align-content: center;                  /*align grid vertically to div*/
+    padding: 30px;
+}
+
+.col-sm-4 img{
+    width: 320px;
+    height: 250px;
+    transition: transform 0.3s ease;
+    border-radius: 4px;                     /*round div border for each picture*/
+    box-shadow: 2px 2px 2px 2px #e4e4e4;  /*add slight shadow to each picture*/
+}
+
+.col-sm-4 img:hover {
+    transform: scale(1.05);
+}
+
+.container{
+    background-color: grey;
+    margin-bottom: 5%;
+}
