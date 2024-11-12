@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+.row {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    padding: 30px;
+}
+
+.col-sm-4 img{
+    width: 320px;
+    height: 250px;
+    transition: transform 0.3s ease;
+    border-radius: 4px;
+    box-shadow: 2px 2px 2px 2px #e4e4e4;
+}
+
+.col-sm-4 img:hover {
+    transform: scale(1.05);
+}
+
+.container{
+    background-color: grey;
+    margin-bottom: 5%;
+}
