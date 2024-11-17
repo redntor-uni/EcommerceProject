@@ -7,8 +7,8 @@
 {% block content %}
 <!-- Login Form -->
 <div class="form-container">
-    <h1>Login</h1>
-
+  <h1>Login</h1>
+  <form method="post" action="/Login">
     <div class="form-item">
       <label for="username">Username</label>
       <input type="text" id="username" name="username" placeholder="johndoe">
@@ -22,17 +22,17 @@
     <div class="button-group">
       <button type="Login">Submit</button>
     </div>
-
-    <div class="forgot_username">
-      <p> <a href="forgot_username">Forgot username?</a></p>
-    </div>
-
-    <div class="forgot_password">
-      <p> <a href="forgot_password">Forgot password?</a></p>
-    </div>
-
-    <div class="create_account">
-      <p><b>Don't have an account?</b> <a href="sign_up">Sign Up for free</a></p>
-    </div>
+  </form>
+  <div class="forgot_username">
+    <p> <a href="forgot_username">Forgot username?</a></p>
   </div>
+
+  <div class="forgot_password">
+    <p> <a href="forgot_password">Forgot password?</a></p>
+  </div>
+
+  <div class="create_account">
+    <p><b>Don't have an account?</b> <a href="sign_up">Sign Up for free</a></p>
+  </div>
+</div>
 {% endblock %}
