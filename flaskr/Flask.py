@@ -118,7 +118,7 @@ def orderCompleted():
 @app.route("/Cart")
 def cart():
     cursor = db.cursor(dictionary=True)
-    query = "SELECT * FROM Carts c join Products p on c.ItemID = p.ID WHERE UserID = %s "
+    query = "SELECT * FROM Carts c join Products p on c.ItemID = p.ID WHERE Status = 'Active' AND UserID = %s "
     cursor.execute(query, (session['UserID'],))
     cart = cursor.fetchall()
 
