@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Order Completed{% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ordercompleted.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="container"></div>
+    <h1>Thank You for Your Order!</h1>
+    <p>Your order has been successfully completed. Below are the details of your purchase:</p>
+
+    <div class="order-summary">
+        <h2>Order Summary</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.price }}</td>
+                    <td>${{ item.total }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3" style="text-align:right; font-weight:bold;">Subtotal</td>
+                    <td>$55.00</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:right; font-weight:bold;">Shipping</td>
+                    <td>$5.00</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:right; font-weight:bold;">Total</td>
+                    <td>${{total}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="shipping-info">
+        <h2>Shipping Information</h2>
+        <table>
+            <tr>
+                <th>User</th>
+                <td>{{ userName }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>123 Main St, Anytown, USA</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ userEmail }}</td>
+            </tr>
+            <tr>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p>If you have any questions about your order, feel free to <a href="mailto:support@example.com">contact us</a>.</p>
+    </div>
+</div>
+{% endblock %}
