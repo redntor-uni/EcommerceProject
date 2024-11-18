@@ -10,7 +10,7 @@ app.secret_key = 'pathfinders_key'  # For session management
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="EddieO0528",
+    password="redentor",
     database="pathfinders"
 )
 
