@@ -14,6 +14,10 @@ db = mysql.connector.connect(
     database="pathfinders"
 )
 
+def init_cart():
+    if 'cart' not in session:
+        session['cart'] = {}
+
 @app.route("/Main/")
 @app.route("/")
 def home():
@@ -32,6 +36,7 @@ def login():
         
         if user:
             session['username'] = username
+            session['UserID'] = user['ID']
             return redirect(url_for('home'))
         else:
             return "Invalid credentials, please try again."
@@ -66,7 +71,44 @@ def register():
 
 @app.route("/Cart")
 def cart():
-	return render_template("Cart.html")
+    cursor = db.cursor(dictionary=True)
+    query = "SELECT * FROM Carts c join Products p on c.ItemID = p.ID WHERE UserID = %s "
+    cursor.execute(query, (session['UserID'],))
+    cart = cursor.fetchall()
+
+    init_cart()
+    cart_items = []
+    total = 0
+    # cart = session['cart']
+    if cart:
+        # Access properties of the cart
+        for item in cart:
+            print(f"Product ID: {item['ItemID']}, Quantity: {item['Quantity']}, Price: {item['Price']}")
+            item_total = item['Quantity'] * item['Price']
+            cart_items.append({
+                'id': item['ItemID'],
+                'name': item['Name'],
+                'description' : item['Description'],
+                'price': item['Price'],
+                'quantity': item['Quantity'],
+                'imgURL': item['Img'],
+                'total': item_total
+            })
+            total += item_total
+        # for pid, qty in cart.items():
+        #     product = [p for p in products if int(pid) == p['id']][0]
+        #     if product:
+        #         item_total = product['price'] * qty
+        #         cart_items.append({
+        #             'id': pid,
+        #             'name': product['name'],
+        #             'price': product['price'],
+        #             'quantity': qty,
+        #             'total': item_total
+        #         })
+        #         total += item_total
+
+    return render_template("Cart.html", cart_items=cart_items, total=total)
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5001)
