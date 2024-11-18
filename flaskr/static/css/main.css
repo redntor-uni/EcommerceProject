@@ -18,6 +18,8 @@
 }
 
 .container{
+    border-radius: 10px;
+    color: white;
     background-color: grey;
     margin-bottom: 5%;
 }

@@ -45,11 +45,11 @@
             <!-- <a href="Register"><span class="material-symbols-outlined">app_registration</span>Register</a> -->
             {% if logged_in %}
             <a href="{{ url_for('logout') }}"><span class="material-symbols-outlined">logout</span>Logout</a>
+            <a href="{{ url_for('settings')}}"><span class="material-symbols-outlined">settings</span>Settings</a>
             {% else %}
             <a href="{{ url_for('login') }}"><span class="material-symbols-outlined">login</span>Login</a>
             <a href="{{ url_for('register') }}"><span class="material-symbols-outlined">app_registration</span>Register</a>
             {% endif %}
-            <a href="#Settings"><span class="material-symbols-outlined">settings</span>Settings</a>
           </div>
         </div>
       </li>
