@@ -10,7 +10,7 @@ app.secret_key = 'pathfinders_key'  # For session management
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="redentor",
+    password="EddieO0528",
     database="pathfinders"
 )
 
@@ -42,6 +42,14 @@ def login():
             return "Invalid credentials, please try again."
     
     return render_template('login.html')
+
+@app.route("/Products")
+def products():
+	return render_template("Products.html")
+
+@app.route("/Products/Product_Item")
+def product_item():
+	return render_template("Product_Item.html")
 
 @app.route("/Contact")
 def contact():
@@ -101,16 +109,6 @@ def cart():
         #         total += item_total
 
     return render_template("Cart.html", cart_items=cart_items, total=total)
-
-# @app.route("/<name>")
-# def user(name):
-# 	return f"Hello {name}!"
-
-# @app.route("/admin")
-# def admin():
-# 	if a:
-# 		return "admin"
-# 	return redirect(url_for("home"))
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5001)
