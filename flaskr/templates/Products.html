@@ -21,8 +21,48 @@
     </div>
     
     <div class="column product-list">
-      <h2>Product List Goes Here</h2>
+      <div id="product-container">
+        <!-- Each product item will be rendered here -->
+      </div>
     </div>
 </div>
 
+<script>
+  fetch('/api/products')
+      .then(response => response.json())
+      .then(data => {
+          const productContainer = document.getElementById('product-container');
+          data.products.forEach(product => {
+              let productDiv = document.createElement('div');
+              productDiv.innerHTML = `
+                  <h2>${product.name}</h2>
+                  <p>Price: $${product.price}</p>
+                  <button onclick="viewDetails(${product.id})">View Details</button>
+                  <button onclick="addToCart(${product.id})">Add to Cart</button>
+              `;
+              productContainer.appendChild(productDiv);
+          });
+      })
+      .catch(error => console.log('Error:', error));
+
+  function viewDetails(id) {
+      window.location.href = `/products/${id}`;
+  }
+
+  function addToCart(id) {
+      console.log(id)
+      fetch(`/api/add_to_cart/${id}`, {
+          method: 'POST',
+          headers: {
+                  'Content-Type': 'application/json', // Specify JSON content type
+                  },
+          body: JSON.stringify({})
+      }).then(response => {
+          window.location.href = "/cart"
+      }).catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+      })
+  }
+
+</script>
 {% endblock %}
