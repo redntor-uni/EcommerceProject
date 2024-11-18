@@ -1,4 +1,5 @@
 from flask import Flask, redirect, request, url_for, render_template, session
+from datetime import datetime
 import mysql.connector
 
 
@@ -69,6 +70,51 @@ def logout():
 def register():
 	return render_template("Register.html")
 
+@app.route("/OrderCompleted", methods=['POST'])
+def orderCompleted():
+
+    # Get the items from the form data
+    items = request.form.getlist('items[]')  # Get the list of items from the hidden inputs
+
+    # Parse the item details (name, quantity, price) from the string
+    parsed_items = []
+    total = 0
+    if len(items) > 0:
+        
+        for item in items:
+            id, name, quantity, price = item.split('|')
+            parsed_items.append({
+                'id': id,
+                'name': name,
+                'quantity': int(quantity),
+                'price': float(price),
+                'total': int(quantity) * float(price)
+            })
+            total += int(quantity) * float(price)
+        cursor = db.cursor(dictionary=True)
+        insertQuery = "INSERT INTO Orders (UserID, OrderTotal, OrderDate) VALUES (%s, %s, %s)"
+        order_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        cursor.execute(insertQuery, (session['UserID'],total, order_date))
+        order_id = cursor.lastrowid
+        db.commit()
+        update_cart_status_query = """
+        UPDATE Carts
+        SET Status = 'Completed',
+        OrderId = %s
+        WHERE UserID = %s
+        """
+        cursor.execute(update_cart_status_query, (order_id, session['UserID']))
+        db.commit()
+        user_info_query = """
+        SELECT * FROM Users WHERE ID = %s
+        """
+        cursor.execute(user_info_query, (session['UserID'],))
+        user = cursor.fetchone()
+        userName = user['User']
+        userEmail = user['Email']
+        return render_template("OrderCompleted.html", cart_items=parsed_items, total=total, userName=userName, userEmail=userEmail)
+
+
 @app.route("/Cart")
 def cart():
     cursor = db.cursor(dictionary=True)
@@ -95,18 +141,7 @@ def cart():
                 'total': item_total
             })
             total += item_total
-        # for pid, qty in cart.items():
-        #     product = [p for p in products if int(pid) == p['id']][0]
-        #     if product:
-        #         item_total = product['price'] * qty
-        #         cart_items.append({
-        #             'id': pid,
-        #             'name': product['name'],
-        #             'price': product['price'],
-        #             'quantity': qty,
-        #             'total': item_total
-        #         })
-        #         total += item_total
+
 
     return render_template("Cart.html", cart_items=cart_items, total=total)
 
