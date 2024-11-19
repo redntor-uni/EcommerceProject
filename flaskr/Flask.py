@@ -170,7 +170,7 @@ def cart():
             total += item_total
 
 
-    return render_template("Cart.html", cart_items=cart_items, total=total)
+    return render_template("Cart.html", cart_items=cart_items, total=total, logged_in='username' in session)
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5001)
