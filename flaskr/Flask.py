@@ -15,7 +15,7 @@ db = mysql.connector.connect(
     database="pathfinders"
 )
 
-products = [
+Products = [
     {"id": 1, "name": "Xbox 360", "price": 100},
     {"id": 2, "name": "Play Station 1", "price": 50},
     {"id": 4, "name": "Play Station 2", "price": 70},
@@ -32,13 +32,21 @@ products = [
     { "id": 15, "name": "Mouse", "price": 49 }
 ]
 
+@app.route('/api/Products')
+def get_products():
+    return jsonify({"Products": Products})
+
+@app.route("/Products")
+@app.route("/Products/<pid>")
+def products(pid=None):
+    if pid is None:
+        return render_template("Products.html", logged_in='username' in session)
+    matching_product = [p for p in Products if int(pid) == p['id']]
+    return render_template('Product_Item.html', Products=matching_product[0], logged_in='username' in session)
+
 def init_cart():
     if 'cart' not in session:
         session['cart'] = {}
-
-@app.route('/api/products')
-def get_products():
-    return jsonify({"products": products})
 
 @app.route("/")
 def home():
@@ -63,14 +71,6 @@ def login():
             return "Invalid credentials, please try again."
     
     return render_template('login.html')
-
-@app.route("/Products")
-@app.route("/Products/<pid>")
-def products(pid=None):
-    if pid is None:
-        return render_template("Products.html", logged_in='username' in session)
-    matching_product = [p for p in products if int(pid) == p['id']]
-    return render_template('Product_Item.html', product=matching_product[0], logged_in='username' in session)
 
 @app.route("/Contact")
 def contact():
