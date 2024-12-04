@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}My Orders{% endblock %}
+
+{% block css %}
+<style>
+    .order-table img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+    .order-table th, .order-table td {
+        vertical-align: middle;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">My Orders</h2>
+    {% if orders %}
+        <table class="table table-bordered order-table">
+            <thead class="table-light">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Product</th>
+                    <th>Product Image</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Subtotal</th>
+                    <th>Order Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.orderDate }}</td>
+                        <td>{{ order.name }}</td>
+                        <td>
+                            <img src="{{ order.imgURL }}" alt="{{ order.name }}">
+                        </td>
+                        <td>{{ order.quantity }}</td>
+                        <td>${{ order.price }}</td>
+                        <td>${{ order.itemSubtotal }}</td>
+                        <td>${{ order.orderTotal }}</td>
+                        <td>{{ order.status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info">You have no orders yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

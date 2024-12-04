@@ -11,7 +11,7 @@ app.secret_key = 'pathfinders_key'  # For session management
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="EddieO0528",
+    password="redentor",
     database="pathfinders"
 )
 
@@ -47,8 +47,12 @@ def add_to_cart(pid):
 def init_cart():
     if 'cart' not in session:
         session['cart'] = {}
+def init_order():
+    if 'order' not in session:
+        session['order'] = {}
 #-------------------- NORMAL-ROUTES-WITH-DEFINITIONS -----------------------------------------------------------------------------------------------------
 #------------------- restructured-according-to-NavBar ----------------------------------------------------------------------------------------------------
+
 @app.route("/")
 def home():
     if 'username' in session and session['username'] is not None:
@@ -226,6 +230,102 @@ def orderCompleted():
         userEmail = user['Email']
         return render_template("OrderCompleted.html", cart_items=parsed_items, total=total, userName=userName, userEmail=userEmail)
 
+
+@app.route('/myOrders')
+def myOrders():
+    cursor = db.cursor(dictionary=True)
+    query = ("SELECT * FROM Orders o JOIN Carts c ON " +
+             "c.OrderID = o.ID JOIN Products p ON c.ItemId = p.ID " +
+             "WHERE o.UserID = %s ")
+    
+    cursor.execute(query, (session['UserID'],))
+    orders = cursor.fetchall()
+
+    init_order()
+    order_items = []
+    total = 0
+
+    if orders:
+        # Access properties of the cart
+        for order in orders:
+            print(f"Order ID: {order['OrderID']}, Order Date: {order['OrderDate']}, " +
+                  f"Order Total: {order['OrderTotal']} Quantity: {order['Quantity']}, " + 
+                  f"Price: {order['ItemPrice']}, Product: {order['Name']}")
+            
+            item_subtotal = int(order['Quantity']) * float(order['ItemPrice'])
+            
+            order_items.append({
+                'id': order['OrderID'],
+                'name': order['Name'],
+                # 'description' : item['Description'],
+                'price': order['ItemPrice'],
+                'quantity': order['Quantity'],
+                'itemSubtotal': item_subtotal,
+                'imgURL': order['Img'],
+                'orderTotal': order['OrderTotal'],
+                'orderDate': order['OrderDate'],
+                'status': order['Status']
+                
+            })
+            # total += item_total
+    return render_template("MyOrders.html", orders=order_items)
+
+@app.route('/updateCart', methods=['POST'])
+def updateCart():
+    cart_id = request.form.get('cart_id')
+    quantity = request.form.get('quantity-' + cart_id)
+    price = request.form.get('price')
+    # quantity2 = request.form.get('hdnQuantity')
+    item_total = int(quantity) * float(price)
+    try:
+        # Update the cart in the database
+        cursor = db.cursor(dictionary=True)
+        query = "UPDATE Carts SET Quantity = %s , Total = %s  WHERE ID = %s "
+        cursor.execute(query, (quantity, item_total, cart_id))
+        db.commit()
+
+        return redirect('/Cart')
+        # item = cart
+        # if item:
+        #     item.quantity = int(quantity)
+        #     db.session.commit()
+        #     /return jsonify({"success": True, "message": "Cart updated successfully"})
+        # else:
+        #     return jsonify({"success": False, "message": "Item not found"})
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)})
+
+
+@app.route("/Cart")
+def cart():
+    cursor = db.cursor(dictionary=True)
+    query = "SELECT * FROM Carts c join Products p on c.ItemID = p.ID WHERE c.Status = %s  AND UserID = %s "
+    cursor.execute(query, ('Active', session['UserID']))
+    cart = cursor.fetchall()
+
+    init_cart()
+    cart_items = []
+    total = 0
+    # cart = session['cart']
+    if cart:
+        # Access properties of the cart
+        for item in cart:
+            print(f"Product ID: {item['ID']}, Quantity: {item['Quantity']}, Price: {item['ItemPrice']}")
+            item_total = item['Quantity'] * item['Price']
+            cart_items.append({
+                'id': item['ID'],
+                'name': item['Name'],
+                'description' : item['Description'],
+                'price': item['Price'],
+                'quantity': item['Quantity'],
+                'item_total': item_total,
+                'imgURL': item['Img'],
+                'total': item_total
+            })
+            total += item_total
+
+
+    return render_template("Cart.html", cart_items=cart_items, total=total, logged_in='username' in session)
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5001)
