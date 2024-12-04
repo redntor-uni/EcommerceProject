@@ -8,33 +8,33 @@
 <!-- Register Form -->
 <div class="form-container">
   <h1>Register</h1>
+  <form method="post" action="/Register">
+    <div class="form-item">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="johndoe">
+    </div>
 
+    <div class="form-item">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="johndoeverything@gmail.com">
+    </div>
+
+    <div class="form-item">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="password1">
+    </div>
+
+    <div class="form-item">
+      <label for="comfirm_password">Comfirm Password</label>
+      <input type="password" id="comfirm_password" name="comfirm_password" placeholder="password1">
+    </div>
+
+    <div class="button-group">
+      <button type="Register">Submit</button>
+    </div>
+  </form>
   <div class="form-item">
-    <label for="username">Username</label>
-    <input type="text" id="username" name="username" placeholder="johndoe">
-  </div>
-
-  <div class="form-item">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" placeholder="johndoeverything@gmail.com">
-  </div>
-
-  <div class="form-item">
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" placeholder="password1">
-  </div>
-
-  <div class="form-item">
-    <label for="comfirm_password">Comfirm Password</label>
-    <input type="password" id="comfirm_password" name="comfirm_password" placeholder="password1">
-  </div>
-
-  <div class="button-group">
-    <button type="submit">Submit</button>
-  </div>
-
-  <div class="form-item">
-    <p><b>Already have an account?</b><a href="login_reference">Login</a></p>
+    <p><b>Already have an account?</b><a href="url_for{/Login}">Login</a></p>
   </div>
 
 </div>

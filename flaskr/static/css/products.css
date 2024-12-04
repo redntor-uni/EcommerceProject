@@ -1,6 +1,6 @@
 /* SEARCH STYLING */
 .search-products {
-  background-color: blue;
+  background-color: rgb(83, 83, 83);
   margin: auto;
   text-align: center;
 }
@@ -9,44 +9,19 @@ input[type='text'] {
   border: none;
   padding: 7px;
 }
-.search-products  button {
-  height: 25px;
-  /* float: left; */
-  background: #ddd;
-  border: none;
-  cursor: pointer;
-  vertical-align: middle;
-}
+
 /* COLUMN LAYOUT */
-/* Create two unequal columns that floats next to each other */
 .column {
-  float: left;
-  padding: 10px;
-}
-/* Left and right column */
-.column.filter-panel {
-  background-color: red;
-  text-align: center;
-  width: 25%;
+  margin: auto;
 }
 
 /* Middle column */
 .column.product-list {
-  background-color: green;
+  background-color: rgb(130, 130, 130);
   text-align: center;
-  width: 75%;
+  width: 80%;
 }
 
-/* Clear floats after the columns */
-.row::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .column.side, .column.middle {
-    width: 100%;
-  }
+img {
+  width: 300px;
 }
