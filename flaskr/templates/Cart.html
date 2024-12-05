@@ -63,19 +63,6 @@
                                 </td>
                                 <td class="align-middle">
                                     <div class="d-flex flex-row">
-                                        <!-- <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
-                                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-
-                                            <input id="form1" min="0" name="quantity" value="{{ product.quantity }}"
-                                                type="number" class="form-control form-control-sm"
-                                                style="width: 50px;" />
-
-                                            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
-                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                <i class="fas fa-plus"></i>
-                                            </button> -->
                                         <form id="update-form-{{ item.id }}" action="{{ url_for('updateCart') }}"
                                             method="POST">
                                             <input type="hidden" name="cart_id" value="{{ item.id }}">
