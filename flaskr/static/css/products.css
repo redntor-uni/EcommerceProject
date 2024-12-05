@@ -1,8 +1,9 @@
 /* SEARCH STYLING */
 .search-products {
-  background-color: rgb(83, 83, 83);
+  background-color: #a4a4a4;
   margin: auto;
   text-align: center;
+  padding: 10px;
 }
 .search-products
 input[type='text'] {
@@ -13,6 +14,7 @@ input[type='text'] {
 /* COLUMN LAYOUT */
 .column {
   margin: auto;
+  margin-bottom: 20px;
 }
 
 /* Middle column */

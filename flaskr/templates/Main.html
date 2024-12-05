@@ -7,11 +7,23 @@
 {% block content %}
 <!-- RECENT ADDITION CONTENT -->
  
-<div class="Welcome">{{ welcome }}</div>
+<div class="Welcome">
+    <div class="Intro">
+        <h2>{{ welcome }}</h2>
+        <h1>Shop Nike at Pathfinders Today!</h1>
+        <p>
+            Whether you're after the latest Nike releases, a new pair of basketball sneakers, 
+            or a stylish new pair of Nike Air Force 1s, Pathfinders is your one-stop destination 
+            for Nike footwear. Enjoy exclusive drops, great deals, and a seamless shopping 
+            experience all in one place. <br><br>
+            <b>Don’t miss out – shop Foot Locker today and step up your Nike game!</b><br><br>
+        </p>
+    </div>
+</div>
 
 <div class="container"> 
     <div class="content_info">
-        <h1 class="display-5 fw-bolder">Recent Addition</h1>
+        <h3 class="display-5 fw-bolder">Recent Addition</h3>
     </div>
     <div class="row">
         <div class="col-sm-4">
@@ -31,7 +43,7 @@
 <!-- MOST POPULAR CONTENT -->
 <div class="container"> 
     <div class="content_info">
-        <h1 class="display-5 fw-bolder">Most Popular</h1>
+        <h3 class="display-5 fw-bolder">Most Popular</h3>
     </div>
 
     <div class="row">
@@ -52,7 +64,7 @@
     <!-- DISCOUNTS CONTENT -->
 <div class="container"> 
     <div class="content_info">
-        <h1 class="display-5 fw-bolder">25% Discount on Select Items</h1>
+        <h3 class="display-5 fw-bolder">25% Discount on Select Items</h3>
     </div>
 
     <div class="row">
@@ -69,4 +81,9 @@
         </div> 
     </div>
 </div>
+
+
+<script>
+
+</script>
 {% endblock %}

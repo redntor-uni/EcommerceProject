@@ -11,7 +11,7 @@ app.secret_key = 'pathfinders_key'  # For session management
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="redentor",
+    password="EddieO0528",
     database="pathfinders"
 )
 
@@ -35,14 +35,35 @@ def search_products():
 @app.route('/api/add_to_cart/<pid>', methods=['POST'])
 def add_to_cart(pid):
     init_cart()
-    matching_product = [p for p in Products if int(pid) == p['id']]
+    matching_product = [p for p in Products if int(pid) == p['ID']]
     quantity = 1
-    if pid in session['cart']:
-        session['cart'][pid] += quantity
+    uid = session['UserID']
+    price = matching_product[0]['Price']
+    cursor = db.cursor(dictionary=True)
+    query = "SELECT * FROM Carts WHERE UserID = %s AND ItemID = %s"
+    cursor.execute(query, (uid, pid))
+    product = cursor.fetchone()
+    print(product)
+    if product:
+        print('yes')
+        cursor1 = db.cursor(dictionary=True)
+        quantity = product['Quantity'] + quantity
+        item_total = product['ItemPrice']*quantity
+        query1 = "UPDATE Carts SET Quantity = %s , Total = %s  WHERE UserID = %s "
+        cursor1.execute(query1, (quantity, item_total, uid))
+        db.commit()
+        cursor1.close()
+        cursor.close()
+        return redirect('/')
     else:
-        session['cart'][pid] = quantity
-    session.modified = True
-    return jsonify({})
+        price = matching_product[0]['Price']
+        item_total = quantity * price
+        cursor1 = db.cursor(dictionary=True)
+        cursor1.execute(f"insert into Carts (UserID, ItemID, Quantity, Total, Status, ItemPrice) values ('{uid}', '{pid}', '{quantity}', '{item_total}', '{'Active'}', '{price}')")
+        db.commit()
+        cursor1.close()
+        cursor.close()
+        return redirect('/Cart')
 
 def init_cart():
     if 'cart' not in session:
@@ -134,57 +155,29 @@ def settings():
 def forgot():
 	return render_template("Forgot.html")
 
-@app.route("/Cart")
+# @app.route("/Cart")
 # def cart():
-#     cursor = db.cursor(dictionary=True)
-#     query = "SELECT * FROM Carts c join Products p on c.ItemID = p.ID WHERE c.Status = %s  AND UserID = %s "
-#     cursor.execute(query, ('Active', session['UserID']))
-#     cart = cursor.fetchall()
-
-#     init_cart()
-#     cart_items = []
-#     total = 0
-#     # cart = session['cart']
-#     if cart:
-#         # Access properties of the cart
-#         for item in cart:
-#             print(f"Product ID: {item['ItemID']}, Quantity: {item['Quantity']}, Price: {item['Price']}")
-#             item_total = item['Quantity'] * item['Price']
-#             cart_items.append({
-#                 'id': item['ItemID'],
-#                 'name': item['Name'],
-#                 'description' : item['Description'],
-#                 'price': item['Price'],
-#                 'quantity': item['Quantity'],
-#                 'imgURL': item['Img'],
-#                 'total': item_total
-#             })
-#             total += item_total
-
-#     return render_template("Cart.html", cart_items=cart_items, total=total, logged_in='username' in session)
-
-def cart():
-    if 'username' in session and session['username'] is not None:
-        init_cart()
-        cart = session['cart']
-        cart_items = []
-        total = 0
-        for pid, qty in cart.items():
-            product = [p for p in Products if int(pid) == p['ID']][0]
-            if product:
-                item_total = product['price'] * qty
-                cart_items.append({
-                    'id': pid,
-                    'image': product['image'],
-                    'name': product['name'],
-                    'price': product['price'],
-                    'quantity': qty,
-                    'total': item_total
-                })
-                total += item_total
-        return render_template('cart.html', cart_items=cart_items, total=total, logged_in='username' in session)
-    else:
-        return redirect(url_for('login'))
+#     if 'username' in session and session['username'] is not None:
+#         init_cart()
+#         cart = session['cart']
+#         cart_items = []
+#         total = 0
+#         for pid, qty in cart.items():
+#             product = [p for p in Products if int(pid) == p['ID']][0]
+#             if product:
+#                 item_total = product['price'] * qty
+#                 cart_items.append({
+#                     'id': pid,
+#                     'image': product['image'],
+#                     'name': product['name'],
+#                     'price': product['price'],
+#                     'quantity': qty,
+#                     'total': item_total
+#                 })
+#                 total += item_total
+#         return render_template('cart.html', cart_items=cart_items, total=total, logged_in='username' in session)
+#     else:
+#         return redirect(url_for('login'))
 
 @app.route("/OrderCompleted", methods=['POST'])
 def orderCompleted():
@@ -228,7 +221,7 @@ def orderCompleted():
         user = cursor.fetchone()
         userName = user['User']
         userEmail = user['Email']
-        return render_template("OrderCompleted.html", cart_items=parsed_items, total=total, userName=userName, userEmail=userEmail)
+        return render_template("OrderCompleted.html", cart_items=parsed_items, total=total, userName=userName, userEmail=userEmail, logged_in='username' in session)
 
 
 @app.route('/myOrders')
@@ -268,7 +261,7 @@ def myOrders():
                 
             })
             # total += item_total
-    return render_template("MyOrders.html", orders=order_items)
+    return render_template("MyOrders.html", orders=order_items, logged_in='username' in session)
 
 @app.route('/updateCart', methods=['POST'])
 def updateCart():
@@ -298,34 +291,34 @@ def updateCart():
 
 @app.route("/Cart")
 def cart():
-    cursor = db.cursor(dictionary=True)
-    query = "SELECT * FROM Carts c join Products p on c.ItemID = p.ID WHERE c.Status = %s  AND UserID = %s "
-    cursor.execute(query, ('Active', session['UserID']))
-    cart = cursor.fetchall()
+    if 'username' in session and session['username'] is not None:
+        cursor = db.cursor(dictionary=True)
+        query = "SELECT * FROM Carts c join Products p on c.ItemID = p.ID WHERE c.Status = %s  AND UserID = %s "
+        cursor.execute(query, ('Active', session['UserID']))
+        cart = cursor.fetchall()
 
-    init_cart()
-    cart_items = []
-    total = 0
-    # cart = session['cart']
-    if cart:
-        # Access properties of the cart
-        for item in cart:
-            print(f"Product ID: {item['ID']}, Quantity: {item['Quantity']}, Price: {item['ItemPrice']}")
-            item_total = item['Quantity'] * item['Price']
-            cart_items.append({
-                'id': item['ID'],
-                'name': item['Name'],
-                'description' : item['Description'],
-                'price': item['Price'],
-                'quantity': item['Quantity'],
-                'item_total': item_total,
-                'imgURL': item['Img'],
-                'total': item_total
-            })
-            total += item_total
-
-
-    return render_template("Cart.html", cart_items=cart_items, total=total, logged_in='username' in session)
+        init_cart()
+        cart_items = []
+        total = 0
+        # cart = session['cart']
+        if cart:
+            # Access properties of the cart
+            for item in cart:
+                print(f"Product ID: {item['ID']}, Quantity: {item['Quantity']}, Price: {item['ItemPrice']}")
+                item_total = item['Quantity'] * item['Price']
+                cart_items.append({
+                    'id': item['ID'],
+                    'name': item['Name'],
+                    'description' : item['Description'],
+                    'price': item['Price'],
+                    'quantity': item['Quantity'],
+                    'item_total': item_total,
+                    'imgURL': item['Img'],
+                    'total': item_total
+                })
+                total += item_total
+        return render_template("Cart.html", cart_items=cart_items, total=total, logged_in='username' in session)
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5001)

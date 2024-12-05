@@ -29,9 +29,6 @@
     <ul class="nav-list">
       <li><a href="{{ url_for('home') }}"><span class="material-symbols-outlined">home</span> Home</a></li>
       <li><a href="{{ url_for('products') }}"><span class="material-symbols-outlined">inventory_2</span> Products</a></li>
-      {% if logged_in %}
-      <li><a href="{{ url_for('myOrders') }}"><span class="material-symbols-outlined">receipt_long</span> My Orders</a></li>
-      {% endif %}
       <li><a href="{{ url_for('contact') }}"><span class="material-symbols-outlined">support_agent</span> Contact US</a></li>
       <li>
         <div class="dropdown">
@@ -41,6 +38,7 @@
             <!-- <a href="Register"><span class="material-symbols-outlined">app_registration</span>Register</a> -->
             {% if logged_in %}
             <a href="{{ url_for('logout') }}"><span class="material-symbols-outlined">logout</span>Logout</a>
+            <a href="{{ url_for('myOrders') }}"><span class="material-symbols-outlined">receipt_long</span> My Orders</a>
             <a href="{{ url_for('settings')}}"><span class="material-symbols-outlined">settings</span>Settings</a>
             {% else %}
             <a href="{{ url_for('login') }}"><span class="material-symbols-outlined">login</span>Login</a>

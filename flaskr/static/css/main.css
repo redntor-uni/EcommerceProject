@@ -1,3 +1,11 @@
+.Welcome {
+    background-color: #a4a4a4;
+    padding-top: 10px;
+}
+.Intro {
+    margin: auto;
+    width: 80%;
+}
 .row {
     display: flex;
     justify-content: space-around;
@@ -12,7 +20,7 @@
     height: 75%;
     transition: transform 0.3s ease;
     border-radius: 4px;
-    box-shadow: 2px 2px 2px 2px #e4e4e4;
+    box-shadow: 2px 2px 2px 2px black;
 }
 
 .col-sm-4 img:hover {
@@ -24,6 +32,10 @@
     border-radius: 10px;
     color: white;
     background-color: grey;
-    margin-bottom: 5%;
+    margin-bottom: 5px;
     width: 80%;
+}
+.content_info {
+    padding: 5px;
+    background-color: black;
 }
