@@ -1,11 +1,16 @@
 from flask import Flask, redirect, request, url_for, render_template, session, jsonify, flash
 from datetime import datetime
 import mysql.connector
+import stripe, os
 
 
 
 app = Flask(__name__)
 app.secret_key = 'pathfinders_key'  # For session management
+
+stripe.api_key = 'sk_test_51QSMXlAx0M62oNutLaFPOZBmhxzAUPhuJFoKEUVIDyFmcpWWLvczpY4cIl3yOBr67Kpp9AOP5kx6L1k49cqNBuAy003cRWRzNL'
+STRIPE_PK = 'pk_test_51QSMXlAx0M62oNutidvR8YzmC4Gbn4ubnDeMNXAGq9I8UE46h8CSvfvmOMaxsynLxgfLe7PA3OeEFWareAdaEzpA00vJIiJNmG'
+
 
 # Connect to MySQL database -------------------------------------------------------------------------------------------------------------------------
 db = mysql.connector.connect(
@@ -179,27 +184,49 @@ def forgot():
 #     else:
 #         return redirect(url_for('login'))
 
-@app.route("/OrderCompleted", methods=['POST'])
+@app.route("/OrderCompleted", methods=['GET','POST'])
 def orderCompleted():
 
     # Get the items from the form data
-    items = request.form.getlist('items[]')  # Get the list of items from the hidden inputs
+    # items = request.form.getlist('items[]')  # Get the list of items from the hidden inputs
+
+    cursor = db.cursor(dictionary=True)
+    query = "SELECT * FROM Carts c join Products p on c.ItemID = p.ID WHERE c.Status = %s  AND UserID = %s "
+    cursor.execute(query, ('Active', session['UserID']))
+    cart = cursor.fetchall()
 
     # Parse the item details (name, quantity, price) from the string
     parsed_items = []
     total = 0
-    if len(items) > 0:
+    if cart:
         
-        for item in items:
-            id, name, quantity, price = item.split('|')
+        # for item in items:
+        #     id, name, quantity, price = item.split('|')
+        #     parsed_items.append({
+        #         'id': id,
+        #         'name': name,
+        #         'quantity': int(quantity),
+        #         'price': float(price),
+        #         'total': int(quantity) * float(price)
+        #     })
+        #     total += int(quantity) * float(price)
+        
+        for item in cart:
+            print(f"Product ID: {item['ID']}, Quantity: {item['Quantity']}, Price: {item['ItemPrice']}")
+            item_total = item['Quantity'] * item['Price']
             parsed_items.append({
-                'id': id,
-                'name': name,
-                'quantity': int(quantity),
-                'price': float(price),
-                'total': int(quantity) * float(price)
+                'id': item['ID'],
+                'name': item['Name'],
+                # 'description' : item['Description'],
+                'price': float(item['Price']),
+                'quantity': int(item['Quantity']),
+                # 'item_total': item_total,
+                # 'imgURL': item['Img'],
+                'total': item_total
             })
-            total += int(quantity) * float(price)
+            total += item_total 
+        
+        
         cursor = db.cursor(dictionary=True)
         insertQuery = "INSERT INTO Orders (UserID, OrderTotal, OrderDate) VALUES (%s, %s, %s)"
         order_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -229,7 +256,7 @@ def myOrders():
     cursor = db.cursor(dictionary=True)
     query = ("SELECT * FROM Orders o JOIN Carts c ON " +
              "c.OrderID = o.ID JOIN Products p ON c.ItemId = p.ID " +
-             "WHERE o.UserID = %s ")
+             "WHERE o.UserID = %s AND c.Status = 'Completed'")
     
     cursor.execute(query, (session['UserID'],))
     orders = cursor.fetchall()
@@ -297,28 +324,67 @@ def cart():
         cursor.execute(query, ('Active', session['UserID']))
         cart = cursor.fetchall()
 
-        init_cart()
+    init_cart()
+    cart_items = []
+    total = 0
+    # cart = session['cart']
+    if cart:
+        # Access properties of the cart
+        for item in cart:
+            print(f"Product ID: {item['ID']}, Quantity: {item['Quantity']}, Price: {item['ItemPrice']}")
+            item_total = item['Quantity'] * item['Price']
+            cart_items.append({
+                'id': item['ID'],
+                'name': item['Name'],
+                'description' : item['Description'],
+                'price': item['Price'],
+                'quantity': item['Quantity'],
+                'item_total': item_total,
+                'imgURL': item['Img'],
+                'total': item_total
+            })
+            total += item_total
+
+
+    return render_template("Cart.html", cart_items=cart_items, total=total, logged_in='username' in session, public_key=STRIPE_PK)
+
+
+@app.route('/payment', methods=['POST'])
+def create_and_confirm_payment():
+    
+    cursor = db.cursor(dictionary=True)
+    query = "SELECT * FROM Carts c join Products p on c.ItemID = p.ID WHERE c.Status = %s  AND UserID = %s "
+    cursor.execute(query, ('Active', session['UserID']))
+    cart = cursor.fetchall()
+    
+    if cart:
+        # Get data from the form
+        data = request.json
         cart_items = []
-        total = 0
-        # cart = session['cart']
-        if cart:
-            # Access properties of the cart
-            for item in cart:
-                print(f"Product ID: {item['ID']}, Quantity: {item['Quantity']}, Price: {item['ItemPrice']}")
-                item_total = item['Quantity'] * item['Price']
-                cart_items.append({
-                    'id': item['ID'],
-                    'name': item['Name'],
-                    'description' : item['Description'],
-                    'price': item['Price'],
-                    'quantity': item['Quantity'],
-                    'item_total': item_total,
-                    'imgURL': item['Img'],
-                    'total': item_total
-                })
-                total += item_total
-        return render_template("Cart.html", cart_items=cart_items, total=total, logged_in='username' in session)
-    return redirect(url_for('login'))
+        for item in cart:
+            cart_items.append({
+                'price_data': {
+                    'currency': data.get('currency', 'usd'),
+                    'product_data': {
+                        'name': item['Name'],
+                    },
+                    # 'unit_amount': item['Price'] * 100, # Amount in cents
+                    'unit_amount_decimal': item['Price'] * 100,
+                },
+                'quantity': item['Quantity'],
+            })
+        checkout_session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                mode='payment',
+                line_items=cart_items,
+                success_url='http://localhost:5001/OrderCompleted',
+                cancel_url='http://localhost:5000/cancel',
+            )
+        return jsonify({'id': checkout_session.id})
+    return redirect(url_for('checkout'))
+
+
+
 
 if __name__ == '__main__':
 	app.run(debug=True, port=5001)
