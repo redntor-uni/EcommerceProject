@@ -324,29 +324,28 @@ def cart():
         cursor.execute(query, ('Active', session['UserID']))
         cart = cursor.fetchall()
 
-    init_cart()
-    cart_items = []
-    total = 0
-    # cart = session['cart']
-    if cart:
-        # Access properties of the cart
-        for item in cart:
-            print(f"Product ID: {item['ID']}, Quantity: {item['Quantity']}, Price: {item['ItemPrice']}")
-            item_total = item['Quantity'] * item['Price']
-            cart_items.append({
-                'id': item['ID'],
-                'name': item['Name'],
-                'description' : item['Description'],
-                'price': item['Price'],
-                'quantity': item['Quantity'],
-                'item_total': item_total,
-                'imgURL': item['Img'],
-                'total': item_total
-            })
-            total += item_total
-
-
-    return render_template("Cart.html", cart_items=cart_items, total=total, logged_in='username' in session, public_key=STRIPE_PK)
+        init_cart()
+        cart_items = []
+        total = 0
+        # cart = session['cart']
+        if cart:
+            # Access properties of the cart
+            for item in cart:
+                print(f"Product ID: {item['ID']}, Quantity: {item['Quantity']}, Price: {item['ItemPrice']}")
+                item_total = item['Quantity'] * item['Price']
+                cart_items.append({
+                    'id': item['ID'],
+                    'name': item['Name'],
+                    'description' : item['Description'],
+                    'price': item['Price'],
+                    'quantity': item['Quantity'],
+                    'item_total': item_total,
+                    'imgURL': item['Img'],
+                    'total': item_total
+                })
+                total += item_total
+        return render_template("Cart.html", cart_items=cart_items, total=total, logged_in='username' in session, public_key=STRIPE_PK)
+    return redirect(url_for('login'))
 
 
 @app.route('/payment', methods=['POST'])
