@@ -36,7 +36,7 @@ async function searchProducts() {
             data.Products.forEach(Products => {
                 let productDiv = document.createElement('div');
                 productDiv.innerHTML = `
-                    <h2>${Products.name}</h2>
+                    <h2>${Products.Name}</h2>
                     <img src="${Products.Img}" alt="${Products.ID}">
                     <p>Price: $${Products.Price}</p>
                     <button onclick="viewDetails(${Products.ID})">View Details</button>
@@ -55,10 +55,13 @@ async function searchProducts() {
               data.results.forEach(Products => {
                   let productDiv = document.createElement('div');
                   productDiv.innerHTML = `
-                      <h2>${Products.Name}</h2>
-                      <p>Price: $${Products.Price}</p>
-                  `;
-                  resultsDiv.appendChild(productDiv);
+                    <h2>${Products.Name}</h2>
+                    <img src="${Products.Img}" alt="${Products.ID}">
+                    <p>Price: $${Products.Price}</p>
+                    <button onclick="viewDetails(${Products.ID})">View Details</button>
+                    <button onclick="addToCart(${Products.ID})">Add to Cart</button>
+                `;
+                resultsDiv.appendChild(productDiv);
               });
           });
   }

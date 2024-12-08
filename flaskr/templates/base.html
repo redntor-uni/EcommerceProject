@@ -50,11 +50,9 @@
       {% if logged_in %}
       <li>
         <div class="shop_cart">
-          <button>
-            <a href="{{ url_for('cart') }}"> 
+          <a href="{{ url_for('cart') }}"> 
             <span inert class="material-symbols-outlined">shopping_cart</span>Shop
-            </a>
-          </button>
+          </a>
         </div>
       </li>
       {% endif %}
