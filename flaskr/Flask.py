@@ -8,6 +8,7 @@ import stripe, os
 app = Flask(__name__)
 app.secret_key = 'pathfinders_key'  # For session management
 
+# Stripes Checkout API and Private Keys -----------------------------------------------------------------------------------------------------------
 stripe.api_key = 'sk_test_51QSMXlAx0M62oNutLaFPOZBmhxzAUPhuJFoKEUVIDyFmcpWWLvczpY4cIl3yOBr67Kpp9AOP5kx6L1k49cqNBuAy003cRWRzNL'
 STRIPE_PK = 'pk_test_51QSMXlAx0M62oNutidvR8YzmC4Gbn4ubnDeMNXAGq9I8UE46h8CSvfvmOMaxsynLxgfLe7PA3OeEFWareAdaEzpA00vJIiJNmG'
 
@@ -16,7 +17,7 @@ STRIPE_PK = 'pk_test_51QSMXlAx0M62oNutidvR8YzmC4Gbn4ubnDeMNXAGq9I8UE46h8CSvfvmOM
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="EddieO0528",
+    password="redentor",
     database="pathfinders"
 )
 
