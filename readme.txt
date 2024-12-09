@@ -1,4 +1,9 @@
 Instructions:
+- Prerequisites:
+	- Install python 3 in the machine running the application
+	- Install mysql connector using the pip install mysql-connector-python command from terminal
+	- Install Stripe third party checkout module using the pip install stripe command from terminal
+
 1. Set up the DATABASE
 	- Reference the readme file in the Database Scripts Folder.
 2. Configure Flask:
