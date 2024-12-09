@@ -16,7 +16,7 @@ STRIPE_PK = 'pk_test_51QSMXlAx0M62oNutidvR8YzmC4Gbn4ubnDeMNXAGq9I8UE46h8CSvfvmOM
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="redentor",
+    password="EddieO0528",
     database="pathfinders"
 )
 

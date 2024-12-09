@@ -1,0 +1,1 @@
+We were planning to incorporate different styling templates to inmpove the look and functionality of our website. For example flaskR2 is a CSS template that uses W3Schools.com CSS file to make dynamic websites. It is called W3CSS (unfortunatley due to time they were not used)
