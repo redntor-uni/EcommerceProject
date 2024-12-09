@@ -16,7 +16,7 @@ STRIPE_PK = 'pk_test_51QSMXlAx0M62oNutidvR8YzmC4Gbn4ubnDeMNXAGq9I8UE46h8CSvfvmOM
 db = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="EddieO0528",
+    password="redentor",
     database="pathfinders"
 )
 
@@ -320,7 +320,7 @@ def updateCart():
 def cart():
     if 'username' in session and session['username'] is not None:
         cursor = db.cursor(dictionary=True)
-        query = "SELECT * FROM Carts c join Products p on c.ItemID = p.ID WHERE c.Status = %s  AND UserID = %s "
+        query = "SELECT c.ID as CartID, c.Quantity, c.ItemPrice, p.Description, p.Price, p.Img, p.Name  FROM Carts c join Products p on c.ItemID = p.ID WHERE c.Status = %s  AND UserID = %s "
         cursor.execute(query, ('Active', session['UserID']))
         cart = cursor.fetchall()
 
@@ -331,10 +331,10 @@ def cart():
         if cart:
             # Access properties of the cart
             for item in cart:
-                print(f"Product ID: {item['ID']}, Quantity: {item['Quantity']}, Price: {item['ItemPrice']}")
+                print(f"Cart ID: {item['CartID']}, Quantity: {item['Quantity']}, Price: {item['ItemPrice']}")
                 item_total = item['Quantity'] * item['Price']
                 cart_items.append({
-                    'id': item['ID'],
+                    'id': item['CartID'],
                     'name': item['Name'],
                     'description' : item['Description'],
                     'price': item['Price'],
