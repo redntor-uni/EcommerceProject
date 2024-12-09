@@ -17,7 +17,7 @@
 
 
 CREATE Database Pathfinders;
-
+USE Pathfinders;
 
 --
 -- Table structure for table `Carts`
