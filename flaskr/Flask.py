@@ -377,7 +377,7 @@ def create_and_confirm_payment():
                 payment_method_types=['card'],
                 mode='payment',
                 line_items=cart_items,
-                success_url='http://localhost:5001/OrderCompleted',
+                success_url='http://127.0.0.1:5001/OrderCompleted',
                 cancel_url='http://localhost:5000/cancel',
             )
         return jsonify({'id': checkout_session.id})
