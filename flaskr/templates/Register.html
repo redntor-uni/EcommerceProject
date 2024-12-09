@@ -24,17 +24,12 @@
       <input type="password" id="password" name="password" placeholder="password1">
     </div>
 
-    <div class="form-item">
-      <label for="comfirm_password">Comfirm Password</label>
-      <input type="password" id="comfirm_password" name="comfirm_password" placeholder="password1">
-    </div>
-
     <div class="button-group">
       <button type="Register">Submit</button>
     </div>
   </form>
   <div class="form-item">
-    <p><b>Already have an account?</b><a href="url_for{/Login}">Login</a></p>
+    <p><b>Already have an account?</b><a href="{{ url_for('login') }}">Login</a></p>
   </div>
 
 </div>

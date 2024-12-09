@@ -11,16 +11,17 @@
     justify-content: space-around;
     align-content: center;
     padding: 30px;
+    padding-bottom: 20px;
 }
-
+.col-sm-4 {
+    padding-bottom: 40px;
+    text-align: center;
+}
 .col-sm-4 img{
-    /* width: 320px;
-    height: 250px; */
     width: 80%;
     height: 75%;
     transition: transform 0.3s ease;
     border-radius: 4px;
-    box-shadow: 2px 2px 2px 2px black;
 }
 
 .col-sm-4 img:hover {

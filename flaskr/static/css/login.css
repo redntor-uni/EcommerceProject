@@ -1,7 +1,6 @@
 .form-container {
     max-width: 450px;
     max-height: 900px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     /* Add additional styles here */
     display: flexbox;                       /*everything in container is now flexbox*/
     padding: 1.5%;                          /*added spacing around the form*/
@@ -9,7 +8,8 @@
     margin: auto;                           /*centered form to the page*/
     margin-top: 3%;
     border-radius: 4px;                     /*rounded div edge*/
-    box-shadow: 1px 1px 1px 1px #c8c8c8;  /*added a slight shadow to div*/
+    border-style: solid;
+    margin-bottom: 100px;
   }
   
   .form-item {
@@ -55,3 +55,20 @@
   button:hover {
     background-color: #218838;
   }
+
+  .form-container a:link {
+    color: black;
+  }
+
+  .form-container a:visited {
+    color: black;
+  }
+
+  .form-container a:hover {
+    background-color: black;
+    color: white;
+  }
+
+  .form-container a:active {
+    color: black;
+  } 

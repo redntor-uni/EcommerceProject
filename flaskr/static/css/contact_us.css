@@ -1,15 +1,14 @@
 .form-container {
     max-width: 450px;
     max-height: 900px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    /* Add additional styles here */
     display: flexbox;                       /*everything in container is now flexbox*/
     padding: 1.5%;                          /*added spacing around the form*/
     background-color: rgb(255, 255, 255); /*changed color to grey*/
     margin: auto;                           /*centered form to the page*/
     margin-top: 3%;
     border-radius: 4px;                     /*rounded div edge*/
-    box-shadow: 1px 1px 1px 1px #c8c8c8;  /*added a slight shadow to div*/
+    border-style: solid;
+    margin-bottom: 100px;
   }
   
   .form-item {
@@ -23,7 +22,7 @@
   }
   
   input[type="email"],
-  textarea[name="concern"] {
+  textarea[name="message"] {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
