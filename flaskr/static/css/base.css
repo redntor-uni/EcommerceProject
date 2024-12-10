@@ -1,0 +1,190 @@
+body {
+  margin: 0;
+  font-family: "Montserrat", serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  background-color: white;
+}
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* HEADER STYLING */
+.header {
+  background-color: black; 
+  padding-top: 20px;
+  text-align: center;
+}
+.header img {
+  border-radius: 10px;
+}
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* GENERAL LIST STYLING */
+.navbar {
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 100%;
+  margin: 0;
+  background-color: black; 
+  border-radius: 0px;
+  padding: 8px;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+}
+
+.nav-list li {
+  font-size: 18px; 
+  transition: background-color 0.3s ease; 
+  align-content: center;
+  margin-left: -40px;
+  padding: 15px;
+}
+
+.nav-list a {
+  padding: 15px;
+  text-decoration: none;
+  color: white;
+}
+
+.nav-list a:hover {
+  background-color: #555; 
+  border-radius: 4px; 
+  text-decoration: none;
+  color: white;
+}
+
+span {
+  vertical-align: middle;
+  padding: 0;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+ /* BOOTSTRAP IMAGES */
+.material-symbols-outlined {
+}
+/* ---------------------------------------------------------------------------------------------------------------- */
+ /* DROPDOWN STYLING */
+.dropbtn {
+  font-family: "Montserrat", serif;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px; 
+  transition: background-color 0.3s ease; 
+  text-decoration: none;
+  padding: 15px;
+}
+  
+.dropbtn:hover {
+  background-color: #555;
+  color: white;
+  border-radius: 4px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+  
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  color: black;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+  
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+  
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* SHOP BUTTON STYLING */
+.shop_cart button{
+  font-family: "Montserrat", serif;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border: none;
+  cursor: pointer;
+  font-size: 10px; 
+  transition: background-color 0.3s ease; 
+  text-decoration: none;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.shop_cart button:hover{
+  background-color: #ddd;
+}
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* LOGO IMG STYLING */
+.logo{
+  width: 200px;
+  /* height: 50px; */
+}
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* Footer STYLING */
+.footer {
+  /* position: relative; */
+  /* left: 0; */
+  margin-bottom: 0;
+  width: 100%;
+  background-color: black; 
+  color: white;
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* Resize STYLING */
+ /* WORKIN PROGRESS col-3 col-s-3  */
+* {
+  box-sizing: border-box;
+}
+/* For mobile phones: */
+[class*="col-"] {
+  width: 100%;
+}
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+  .col-s-1 {width: 8.33%;}
+  .col-s-2 {width: 16.66%;}
+  .col-s-3 {width: 25%;}
+  .col-s-4 {width: 33.33%;}
+  .col-s-5 {width: 41.66%;}
+  .col-s-6 {width: 50%;}
+  .col-s-7 {width: 58.33%;}
+  .col-s-8 {width: 66.66%;}
+  .col-s-9 {width: 75%;}
+  .col-s-10 {width: 83.33%;}
+  .col-s-11 {width: 91.66%;}
+  .col-s-12 {width: 100%;}
+}
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+{% endblock %}
+
+{% block content %}
+<!-- RECENT ADDITION CONTENT -->
+ 
+<div class="Welcome">
+    <div class="Intro">
+        <h2>{{ welcome }}</h2>
+        <h1>Shop Nike at Pathfinders Today!</h1>
+        <p>
+            Whether you're after the latest Nike releases, a new pair of basketball sneakers, 
+            or a stylish new pair of Nike Air Force 1s, Pathfinders is your one-stop destination 
+            for Nike footwear. Enjoy exclusive drops, great deals, and a seamless shopping 
+            experience all in one place. <br><br>
+            <b>Don’t miss out – shop Pathfinders today and step up your Nike game!</b><br><br>
+        </p>
+    </div>
+</div>
+
+<div class="container"> 
+    <div class="content_info">
+        <h3 class="display-5 fw-bolder">Recent Addition</h3>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <h4>Nike Nike ZoomX Invincible Run</h4>
+            <img src="https://m.media-amazon.com/images/I/71NDLBxr48L._AC_SY500_.jpg" alt="id-4">
+            <button onclick="addToCart(4)">Add to Cart</button>
+        </div>
+
+        <div class="col-sm-4">
+            <h4>Nike Flyknit Trainer</h4>
+            <img src="https://m.media-amazon.com/images/I/51afR1vPRuL._AC_SY500_.jpg" alt="id-5">
+            <button onclick="addToCart(5)">Add to Cart</button>
+        </div>
+
+        <div class="col-sm-4">
+            <h4>Nike React Infinity Run Flyknit</h4>
+            <img src="https://m.media-amazon.com/images/I/61PmvuXo66L._AC_SY500_.jpg" alt="id-6">
+            <button onclick="addToCart(6)">Add to Cart</button>
+        </div> 
+    </div>
+</div>
+
+<!-- MOST POPULAR CONTENT -->
+<div class="container"> 
+    <div class="content_info">
+        <h3 class="display-5 fw-bolder">Most Popular</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <h4>Nike Air Jordan Retro</h4>
+            <img src="https://m.media-amazon.com/images/I/51HY1980WNL._AC_SX500_.jpg" alt="id-1">
+            <button onclick="addToCart(1)">Add to Cart</button>
+        </div>
+
+        <div class="col-sm-4">
+            <h4>Nike BB Adapt</h4>
+            <img src="https://m.media-amazon.com/images/I/71iTHVTtD+L._AC_SX679_.jpg" alt="id-2">
+            <button onclick="addToCart(2)">Add to Cart</button>
+        </div>
+
+        <div class="col-sm-4">
+            <h4>Nike Air Zoom Pegasus 38</h4>
+            <img src="https://m.media-amazon.com/images/I/71PWUoL+4qL._AC_SX500_.jpg" alt="id-3">
+            <button onclick="addToCart(3)">Add to Cart</button>
+        </div> 
+    </div>
+</div>
+
+    <!-- DISCOUNTS CONTENT -->
+<div class="container"> 
+    <div class="content_info">
+        <h3 class="display-5 fw-bolder">25% Discount on Select Items</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <h4>Nike Blazer Mid '77</h4>
+            <img src="https://m.media-amazon.com/images/I/71Zfz8GIcgL._AC_SX500_.jpg" alt="id-7">
+            <button onclick="addToCart(1)">Add to Cart</button>
+        </div>
+
+        <div class="col-sm-4">
+            <h4>Nike Air Max '97</h4>
+            <img src="https://m.media-amazon.com/images/I/61BoBHIEznL._AC_SY675_.jpg" alt="id-8">
+            <button onclick="addToCart(1)">Add to Cart</button>
+        </div>
+
+        <div class="col-sm-4">
+            <h4>Nike Free RN 5.0</h4>
+            <img src="https://m.media-amazon.com/images/I/81nadvAWG+L._AC_SX500_.jpg" alt="id-9">
+            <button onclick="addToCart(1)">Add to Cart</button>
+        </div> 
+    </div>
+</div>
+
+
+<script src="{{ url_for('static', filename='js/callable_functions.js')}}"></script>
+{% endblock %}

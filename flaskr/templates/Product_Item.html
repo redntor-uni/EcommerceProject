@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Products Page{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/products.css')}}">
+{% endblock %}
+
+{% block content %}
+<!-- Products Page -->
+<div class="search-products">
+    <form action="/action_page.php">
+        <input type="text" placeholder="Search.." name="search">
+        <button type="submit">
+        <span inert class="material-symbols-outlined">search</span>
+        </button>
+    </form>
+</div>
+
+<div class="row">
+    <div class="column filter-panel">
+      <h2>Filter Panel Goes Here</h2>
+    </div>
+    
+    <div class="column product-list">
+      <h2>Product List Goes Here</h2>
+    </div>
+</div>
+
+{% endblock %}

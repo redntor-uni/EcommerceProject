@@ -1,0 +1,42 @@
+.Welcome {
+    background-color: #a4a4a4;
+    padding-top: 10px;
+}
+.Intro {
+    margin: auto;
+    width: 80%;
+}
+.row {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    padding: 30px;
+    padding-bottom: 20px;
+}
+.col-sm-4 {
+    padding-bottom: 40px;
+    text-align: center;
+}
+.col-sm-4 img{
+    width: 80%;
+    height: 75%;
+    transition: transform 0.3s ease;
+    border-radius: 4px;
+}
+
+.col-sm-4 img:hover {
+    transform: scale(1.05);
+}
+
+.container{
+    margin: auto;
+    border-radius: 10px;
+    color: white;
+    background-color: grey;
+    margin-bottom: 5px;
+    width: 80%;
+}
+.content_info {
+    padding: 5px;
+    background-color: black;
+}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Login Page{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css')}}">
+{% endblock %}
+
+{% block content %}
+<!-- Login Form -->
+<div class="form-container">
+  <h1>Login</h1>
+  <form method="post" action="/Login">
+    <div class="form-item">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="johndoe">
+    </div>
+
+    <div class="form-item">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="password1">
+      <p style="color: red;">{{ error }}</p>
+    </div>
+
+    <div class="button-group">
+      <button type="Login">Submit</button>
+    </div>
+  </form>
+  <div class="forgot_username">
+    <p> <a href="{{ url_for('contact') }}">Forgot username or password? Contact Us</a></p>
+  </div>
+  
+  <div class="create_account">
+    <p><b>Don't have an account?</b> <a href="{{ url_for('register') }}">Sign Up for free</a></p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Settings Page{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css')}}">
+<!-- Fonts for User Card -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block content %}
+<!-- Settings Page -->
+<div class="user-card">
+  <div class="placeholder">
+    <img src="{{ url_for('static', filename='images/profile_placeholder.jpg')}}" alt="Profile Placeholder">
+  </div>
+  <h1>{{ username }}</h1>
+  <p class="title">Web Developer</p>
+  <p>University of Rio Grande Valley</p>
+  <a href="#"><i class="fa fa-dribbble"></i></a>
+  <a href="#"><i class="fa fa-twitter"></i></a>
+  <a href="#"><i class="fa fa-linkedin"></i></a>
+  <a href="#"><i class="fa fa-facebook"></i></a>
+  <div class="settings-options">
+    <h1>Settings</h1>
+    <!-- Pending Options for Settings -->
+     <p>Options Coming Soon!</p>
+  </div>
+</div>
+{% endblock %}
